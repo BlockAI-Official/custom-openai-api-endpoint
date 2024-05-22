@@ -1,72 +1,63 @@
 import asyncio
 import json
 import time
-
 from typing import Optional, List
-
-from pydantic import BaseModel, Field
-
-from starlette.responses import StreamingResponse
+import os
 from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel
+from starlette.responses import StreamingResponse
+from langchain.chat_models import ChatOpenAI
+from langchain.agents import load_tools, initialize_agent
+from langchain.agents import AgentType
+from langchain.tools import AIPluginTool
+from dotenv import load_dotenv
 
-app = FastAPI(title="OpenAI-compatible API")
+load_dotenv()
 
+app = FastAPI(title="Enhanced OpenAI-compatible API")
 
-# data models
+# Load environment variables
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+URL = "http://localhost:3000"
+
+# Setup the LangChain OpenAI tool
+llm = ChatOpenAI(api_key=OPENAI_API_KEY)
+
+# Setup LangChain tools for Solana API access
+tools = load_tools(["requests_post"], allow_dangerous_tools=True)
+tool = AIPluginTool.from_plugin_url(URL + "/.well-known/ai-plugin.json")
+tools.append(tool)
+
+# Initialize the agent
+agent_chain = initialize_agent(
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
+
+# Data models
 class Message(BaseModel):
     role: str
     content: str
 
-
 class ChatCompletionRequest(BaseModel):
-    model: Optional[str] = "mock-gpt-model"
     messages: List[Message]
     max_tokens: Optional[int] = 512
     temperature: Optional[float] = 0.1
     stream: Optional[bool] = False
 
-
-async def _resp_async_generator(text_resp: str):
-    # let's pretend every word is a token and return it over time
-    tokens = text_resp.split(" ")
-
-    for i, token in enumerate(tokens):
-        chunk = {
-            "id": i,
-            "object": "chat.completion.chunk",
-            "created": time.time(),
-            "model": request.model,
-            "choices": [{"delta": {"content": token + " "}}],
-        }
-        yield f"data: {json.dumps(chunk)}\n\n"
-        await asyncio.sleep(1)
-    yield "data: [DONE]\n\n"
-
-
-@app.post("/chat/completions")
 async def chat_completions(request: ChatCompletionRequest):
-    if request.messages:
-        resp_content = (
-            "As a mock AI Assitant, I can only echo your last message: "
-            + request.messages[-1].content
-        )
-    else:
-        resp_content = "As a mock AI Assitant, I can only echo your last message, but there wasn't one!"
-    if request.stream:
-        return StreamingResponse(
-            _resp_async_generator(resp_content), media_type="application/x-ndjson"
-        )
-
+    user_query = request.messages[-1].content if request.messages else "No message provided"
+    response = agent_chain.run(user_query)
     return {
-        "id": "1337",
+        "id": str(time.time()),
         "object": "chat.completion",
         "created": time.time(),
-        "model": request.model,
-        "choices": [{"message": Message(role="assistant", content=resp_content)}],
+        "model": "gpt-1337-turbo-pro-max",
+        "choices": [{"message": {"role": "assistant", "content": response}}],
     }
 
+@app.post("/chat/completions")
+async def get_chat_completions(request: ChatCompletionRequest):
+    return await chat_completions(request)
 
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=8000)
