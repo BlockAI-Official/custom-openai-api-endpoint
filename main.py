@@ -1,15 +1,16 @@
 import asyncio
 import json
 import time
-from typing import Optional, List
 import os
+
+from typing import Optional, List
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
-from starlette.responses import StreamingResponse
-from langchain.chat_models import ChatOpenAI
+from starlette.responses import StreamingResponse, FileResponse
+from langchain_community.chat_models import ChatOpenAI
 from langchain.agents import load_tools, initialize_agent
 from langchain.agents import AgentType
-from langchain.tools import AIPluginTool
+from langchain_community.tools import AIPluginTool
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,19 +19,18 @@ app = FastAPI(title="Enhanced OpenAI-compatible API")
 
 # Load environment variables
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-URL = "http://localhost:3000"
 
 # Setup the LangChain OpenAI tool
 llm = ChatOpenAI(api_key=OPENAI_API_KEY)
 
 # Setup LangChain tools for Solana API access
 tools = load_tools(["requests_post"], allow_dangerous_tools=True)
-tool = AIPluginTool.from_plugin_url(URL + "/.well-known/ai-plugin.json")
+tool = AIPluginTool.from_plugin_url("https://blockchatstatic.blob.core.windows.net/api-configuration/.well-known/ai-plugin.json")
 tools.append(tool)
 
 # Initialize the agent
 agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
+    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True, handle_parsing_errors=True)
 
 # Data models
 class Message(BaseModel):
