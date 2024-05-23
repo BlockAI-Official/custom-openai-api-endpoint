@@ -24,3 +24,4 @@ notebooks/
 *.zip
 *.tar
 *.7z
+azure_credentials.json
