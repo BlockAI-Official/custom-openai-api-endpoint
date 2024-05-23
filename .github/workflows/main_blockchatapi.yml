@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - blockchatapi
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://blockchatapi.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_15bb8310fc4b43fc80a1f8b6bdc99edd }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_32d562ee95cb4ae78d7967a38bdda12b }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: blockchatapi.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_15bb8310fc4b43fc80a1f8b6bdc99edd }}/custom-openai-api-endpoint-web:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'blockchatapi'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6a3febb6c50547f6b9d5447522c9b529 }}
+        images: 'blockchatapi.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_15bb8310fc4b43fc80a1f8b6bdc99edd }}/custom-openai-api-endpoint-web:${{ github.sha }}'
