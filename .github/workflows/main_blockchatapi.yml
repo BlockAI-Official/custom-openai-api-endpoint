@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://blockchatapi.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_d4977a09be784449ac4d91f7eed71f2d }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_2133ed1fc9034a63bf2f0cb9fcc847f3 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_ac11044319644126b268dffefabe1eff }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_9cba4345b4ab40f09feac16fa73982e1 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: blockchatapi.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d4977a09be784449ac4d91f7eed71f2d }}/blockchatapi.azurecr.io/custom-openai-api-endpoint-web:${{ github.sha }}
+        tags: blockchatapi.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ac11044319644126b268dffefabe1eff }}/custom-openai-api-endpoint:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'blockchatapi'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8d6bcc45d97448a9b95616d7610175a3 }}
-        images: 'blockchatapi.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d4977a09be784449ac4d91f7eed71f2d }}/blockchatapi.azurecr.io/custom-openai-api-endpoint-web:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_cac38c624594471e983ed3708eba41dd }}
+        images: 'blockchatapi.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ac11044319644126b268dffefabe1eff }}/custom-openai-api-endpoint:${{ github.sha }}'
