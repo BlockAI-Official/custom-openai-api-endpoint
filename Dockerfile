@@ -7,7 +7,12 @@ ENV PYTHONUNBUFFERED 1
 
 # Install system dependencies
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc libpq-dev curl \
+    && apt-get install -y --no-install-recommends \
+        gcc \
+        libpq-dev \
+        curl \
+        build-essential \
+        python3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,8 +32,11 @@ COPY . /app
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
-# Expose the port the app runs on
-EXPOSE 8000
+# Install python-dotenv
+RUN pip install python-dotenv
 
-# Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose the port the app runs on (using default value here)
+EXPOSE ${PORT}
+
+# Command to run the application, ensuring it loads the environment variables
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT}"]
