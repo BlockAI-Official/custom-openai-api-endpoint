@@ -1,0 +1,157 @@
+<mxfile host="Electron" modified="2024-05-23T16:08:12.983Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.6 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="ccTGhNsCAm7T-OMHNETF" version="24.4.6" type="device">
+  <diagram name="Page-1" id="esfJvCoR1udEf4pWD7Vd">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-1" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="440" />
+              <mxPoint x="850" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-1" value="Telegram" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="510" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="760" y="440" />
+              <mxPoint x="851" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-3" value="Desktop App" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="705" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-4" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="440" />
+              <mxPoint x="850" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-4" value="Discord" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="875" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="510" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1100" y="440" />
+              <mxPoint x="851" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-5" value="Mobile" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-33" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="850" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-6" value="Other Interface" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-7" value="BlockChat API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="510" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-8" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="740" y="630" />
+              <mxPoint x="850" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-8" value="Agent 1 (solanalabs API)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="710" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-9" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="630" />
+              <mxPoint x="850" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-9" value="Agent 2 (swap)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="910" y="710" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-10" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="630" />
+              <mxPoint x="850" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-10" value="RAG" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="710" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-11" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-11" value="Smart Contract" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="970" y="510" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-2" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="440" />
+              <mxPoint x="850" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-2" value="Web App" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-25" target="F-OTTwGrum7XiNiV84Rw-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="630" />
+              <mxPoint x="850" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-25" value="Other Agents" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="710" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-28" value="select which features to enable:&lt;div&gt;- RAG&lt;/div&gt;&lt;div&gt;- Agent 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-29" value="select which features to enable:&lt;div&gt;- RAG&lt;/div&gt;&lt;div&gt;- Agent 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-30" value="select which features to enable:&lt;div&gt;- RAG&lt;/div&gt;&lt;div&gt;- Agent 1&lt;/div&gt;&lt;div&gt;- Agent 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="705" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-31" value="select which features to enable:&lt;div&gt;- Agent 1&lt;/div&gt;&lt;div&gt;- Agent 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="875" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-32" value="select which features to enable:&lt;div&gt;- RAG&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="F-OTTwGrum7XiNiV84Rw-6" target="F-OTTwGrum7XiNiV84Rw-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1270" y="270" as="sourcePoint" />
+            <mxPoint x="850" y="510" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1270" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-OTTwGrum7XiNiV84Rw-33" value="select which features to enable:&lt;div&gt;- Other agents&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
