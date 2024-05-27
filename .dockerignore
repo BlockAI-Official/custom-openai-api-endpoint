@@ -25,3 +25,5 @@ notebooks/
 *.tar
 *.7z
 azure_credentials.json
+notebooks/
+wandb/

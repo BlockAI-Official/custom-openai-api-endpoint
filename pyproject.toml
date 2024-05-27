@@ -20,6 +20,8 @@ grpcio = "^1.64.0"
 protobuf = "^3.20.0"
 chromadb = "^0.5.0"
 langgraph = "^0.0.55"
+langchainhub = "^0.1.16"
+wandb = "^0.17.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"
