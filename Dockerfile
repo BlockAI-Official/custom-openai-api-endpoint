@@ -39,4 +39,4 @@ RUN pip install python-dotenv
 EXPOSE ${PORT}
 
 # Command to run the application, ensuring it loads the environment variables
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT}"]
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT}"]
