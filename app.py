@@ -130,7 +130,7 @@ prompt = hub.pull("openai-functions-agent")
 
 ## All tools together
 
-tools += [solanalabs_tool, tavily_tool]
+tools += [solanalabs_tool, tavily_tool, retriever_tool]
 
 ## Defining an agent with tools and memory
 
