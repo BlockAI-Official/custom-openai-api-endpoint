@@ -19,6 +19,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain.tools.retriever import create_retriever_tool
 
+from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
@@ -27,7 +28,6 @@ from langchain import hub
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_openai_functions_agent
 from langchain.agents import AgentExecutor
-from langchain_community.callbacks import get_openai_callback
 
 from langchain.callbacks.base import AsyncCallbackHandler
 from langchain.schema import LLMResult
@@ -120,7 +120,12 @@ retriever_tool = create_retriever_tool(
 
 ## Short term memory
 
-message_history = ChatMessageHistory()
+store = {}
+
+def get_session_history(session_id: str) -> BaseChatMessageHistory:
+    if session_id not in store:
+        store[session_id] = ChatMessageHistory()
+    return store[session_id]
 
 ## Sensory memory
 
@@ -139,7 +144,7 @@ agent = create_openai_functions_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
 agent_with_chat_history = RunnableWithMessageHistory(
     agent_executor,
-    lambda session_id: message_history,
+    get_session_history,
     input_messages_key="input",
     history_messages_key="chat_history",
 )
@@ -148,6 +153,7 @@ agent_with_chat_history = RunnableWithMessageHistory(
 class Message(BaseModel):
     role: str
     content: str
+    session_id: str
 
 class ChatCompletionRequest(BaseModel):
     messages: List[Message]
@@ -197,9 +203,10 @@ class CostCalcAsyncHandler(AsyncCallbackHandler):
 
 async def chat_completions(request: ChatCompletionRequest):
     user_query = request.messages[-1].content if request.messages else "No message provided"
+    session_id = request.messages[-1].session_id
 
     input = {"input": user_query}
-    config = {"configurable": {"session_id": "<foo>"}}
+    config = {"configurable": {"session_id": session_id}}
 
     token_cost_process = TokenCostProcess()
     handler = CostCalcAsyncHandler(model="gpt-3.5-turbo", token_cost_process=token_cost_process)
@@ -223,7 +230,13 @@ async def chat_completions(request: ChatCompletionRequest):
         "object": "chat.completion",
         "created": time.time(),
         "model": "gpt-1337-turbo-pro-max",
-        "choices": [{"message": {"role": "assistant", "content": response_content}}],
+        "choices": [{
+            "message": {
+                "role": "assistant", 
+                "content": response_content,
+                "session_id": session_id
+                }
+            }],
         "usage": {
             "prompt_tokens": prompt_tokens,
             "completion_tokens": completion_tokens,
