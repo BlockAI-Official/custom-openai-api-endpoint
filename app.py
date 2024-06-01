@@ -20,7 +20,8 @@ from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain.tools.retriever import create_retriever_tool
 
 from langchain_core.chat_history import BaseChatMessageHistory
-from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_community.chat_message_histories import SQLChatMessageHistory
+from langchain_core.runnables import RunnablePassthrough
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from langchain import hub
@@ -120,12 +121,27 @@ retriever_tool = create_retriever_tool(
 
 ## Short term memory
 
-store = {}
+llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+summarization_prompt = hub.pull("summarization-prompt")
 
-def get_session_history(session_id: str) -> BaseChatMessageHistory:
-    if session_id not in store:
-        store[session_id] = ChatMessageHistory()
-    return store[session_id]
+def get_session_history(session_id):
+    return SQLChatMessageHistory(session_id, "sqlite:///memory.db")
+
+def summarize_messages(chain_input):
+    chat_history = get_session_history(chain_input["session_id"])
+    stored_messages = chat_history.messages
+    if len(stored_messages) == 0:
+        return False
+
+    summarization_chain = summarization_prompt | llm
+
+    summary_message = summarization_chain.invoke({"chat_history": stored_messages})
+
+    chat_history.clear()
+
+    chat_history.add_message(summary_message)
+
+    return True
 
 ## Sensory memory
 
@@ -139,14 +155,17 @@ tools += [solanalabs_tool, tavily_tool, retriever_tool]
 
 ## Defining an agent with tools and memory
 
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
 agent = create_openai_functions_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
-agent_with_chat_history = RunnableWithMessageHistory(
+initial_agent_with_chat_history = RunnableWithMessageHistory(
     agent_executor,
     get_session_history,
     input_messages_key="input",
     history_messages_key="chat_history",
+)
+agent_with_chat_history = (
+    RunnablePassthrough.assign(messages_summarized=summarize_messages)
+    | initial_agent_with_chat_history
 )
 
 # Data models
@@ -205,7 +224,7 @@ async def chat_completions(request: ChatCompletionRequest):
     user_query = request.messages[-1].content if request.messages else "No message provided"
     session_id = request.messages[-1].session_id
 
-    input = {"input": user_query}
+    input = {"input": user_query, "session_id": session_id}
     config = {"configurable": {"session_id": session_id}}
 
     token_cost_process = TokenCostProcess()

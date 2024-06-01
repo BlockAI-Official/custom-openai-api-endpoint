@@ -162,3 +162,4 @@ cython_debug/
 azure_credentials.json
 notebooks/
 wandb/
+*.db
