@@ -160,6 +160,5 @@ cython_debug/
 #.idea/
 
 azure_credentials.json
-notebooks/
 wandb/
 *.db
