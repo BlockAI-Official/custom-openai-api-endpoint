@@ -27,7 +27,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain import hub
 
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_openai_functions_agent
+from langchain.agents import create_openai_functions_agent, create_react_agent
 from langchain.agents import AgentExecutor
 
 from langchain.callbacks.base import AsyncCallbackHandler
@@ -145,7 +145,8 @@ def summarize_messages(chain_input):
 
 ## Sensory memory
 
-prompt = hub.pull("openai-functions-agent")
+# prompt = hub.pull("openai-functions-agent")
+prompt = hub.pull("react-prompt")
 
 ### Agent
 
@@ -155,7 +156,7 @@ tools += [solanalabs_tool, tavily_tool, retriever_tool]
 
 ## Defining an agent with tools and memory
 
-agent = create_openai_functions_agent(llm, tools, prompt)
+agent = create_react_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
 initial_agent_with_chat_history = RunnableWithMessageHistory(
     agent_executor,
