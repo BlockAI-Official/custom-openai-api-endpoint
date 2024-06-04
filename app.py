@@ -174,7 +174,7 @@ agent_with_chat_history = (
 class Message(BaseModel):
     role: str
     content: str
-    session_id: str
+    session_id: Optional[str]
 
 class ChatCompletionRequest(BaseModel):
     messages: List[Message]
