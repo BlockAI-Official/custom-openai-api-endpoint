@@ -1,6 +1,7 @@
 import time
 import os
 import wandb
+import uuid
 
 from typing import Optional, List
 from fastapi import FastAPI
@@ -223,7 +224,7 @@ class CostCalcAsyncHandler(AsyncCallbackHandler):
 
 async def chat_completions(request: ChatCompletionRequest):
     user_query = request.messages[-1].content if request.messages else "No message provided"
-    session_id = request.messages[-1].session_id
+    session_id = request.messages[-1].session_id if request.messages[-1].session_id else str(uuid.uuid4())
 
     input = {"input": user_query, "session_id": session_id}
     config = {"configurable": {"session_id": session_id}}
