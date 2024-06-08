@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: blockchatctr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4e05b430ccfe4242985b69cfaed220a4 }}/blockchat-api:${{ github.sha }}
+        tags: blockchatctr.azurecr.io/${{ secrets.ACR_USERNAME }}/blockchat-api:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'blockchat-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_5dd06e7d240340938c619bd5d3826376 }}
-        images: 'blockchatctr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4e05b430ccfe4242985b69cfaed220a4 }}/blockchat-api:${{ github.sha }}'
+        images: 'blockchatctr.azurecr.io/${{ secrets.ACR_USERNAME }}/blockchat-api:${{ github.sha }}'
