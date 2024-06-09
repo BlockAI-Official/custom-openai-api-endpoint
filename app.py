@@ -63,8 +63,8 @@ app = FastAPI(title="Enhanced OpenAI-compatible API")
 
 ## Solanalabs API
 
-# URL = "https://blockchatstatic.blob.core.windows.net/api-configuration"
-URL = "https://apiconfigblockhat.blob.core.windows.net/apiconfig"
+URL = "https://blockchatstatic.blob.core.windows.net/api-configuration"
+# URL = "https://apiconfigblockhat.blob.core.windows.net/apiconfig"
 tools = load_tools(["requests_post"], allow_dangerous_tools=True)
 solanalabs_tool = AIPluginTool.from_plugin_url(URL + "/.well-known/ai-plugin.json")
 
