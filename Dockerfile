@@ -5,29 +5,29 @@ FROM python:3.12.3-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Install system dependencies
+# Install system dependencies and Python
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         gcc \
         libpq-dev \
         curl \
         build-essential \
+        python3 \
+        python3-pip \
         python3-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs \
+        nodejs \
+        npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry --version
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Ensure that Poetry installs to system
 ENV PATH="/root/.local/bin:$PATH"
+
+# Verify Poetry installation
+RUN poetry --version
 
 # Set work directory
 WORKDIR /app
@@ -41,7 +41,7 @@ RUN npm init -y \
 
 # Install dependencies using Poetry
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi || cat /root/.cache/pypoetry/virtualenvs/*/log/*
+    && poetry install --no-interaction --no-ansi
 
 # Install python-dotenv
 RUN pip install python-dotenv
