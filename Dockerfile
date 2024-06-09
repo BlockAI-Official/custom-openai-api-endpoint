@@ -5,18 +5,20 @@ FROM python:3.12.3-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Install system dependencies and Python
+# Install system dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         gcc \
         libpq-dev \
         curl \
         build-essential \
-        python3 \
-        python3-pip \
         python3-dev \
-        nodejs \
-        npm \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -25,9 +27,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Ensure that Poetry installs to system
 ENV PATH="/root/.local/bin:$PATH"
-
-# Verify Poetry installation
-RUN poetry --version
 
 # Set work directory
 WORKDIR /app
@@ -39,7 +38,7 @@ COPY . /app
 RUN npm init -y \
     && npm install @solana/web3.js
 
-# Install dependencies using Poetry
+# Install dependencies
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
