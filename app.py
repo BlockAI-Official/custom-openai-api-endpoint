@@ -171,7 +171,7 @@ retriever_tool = create_retriever_tool(
 
 ## Short term memory
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
 summarization_prompt = hub.pull("summarization-prompt")
 
 def get_session_history(session_id):
@@ -279,10 +279,10 @@ async def chat_completions(request: ChatCompletionRequest):
     config = {"configurable": {"session_id": session_id}}
 
     token_cost_process = TokenCostProcess()
-    handler = CostCalcAsyncHandler(model="gpt-3.5-turbo", token_cost_process=token_cost_process)
+    handler = CostCalcAsyncHandler(model="gpt-3.5-turbo-0125", token_cost_process=token_cost_process)
 
     # Manually calculate the tokens for the prompt
-    encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+    encoding = tiktoken.encoding_for_model("gpt-3.5-turbo-0125")
     token_cost_process.sum_prompt_tokens(len(encoding.encode(user_query)))
 
     response = agent_with_chat_history.invoke(input, config=config)
