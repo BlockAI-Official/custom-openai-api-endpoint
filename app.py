@@ -171,7 +171,7 @@ retriever_tool = create_retriever_tool(
 
 ## Short term memory
 
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 summarization_prompt = hub.pull("summarization-prompt")
 
 def get_session_history(session_id):
