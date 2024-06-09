@@ -63,7 +63,8 @@ app = FastAPI(title="Enhanced OpenAI-compatible API")
 
 ## Solanalabs API
 
-URL = "https://blockchatstatic.blob.core.windows.net/api-configuration"
+# URL = "https://blockchatstatic.blob.core.windows.net/api-configuration"
+URL = "https://apiconfigblockhat.blob.core.windows.net/apiconfig"
 tools = load_tools(["requests_post"], allow_dangerous_tools=True)
 solanalabs_tool = AIPluginTool.from_plugin_url(URL + "/.well-known/ai-plugin.json")
 
@@ -222,7 +223,7 @@ agent_with_chat_history = (
 class Message(BaseModel):
     role: str
     content: str
-    session_id: str
+    session_id: Optional[str] = None
 
 class ChatCompletionRequest(BaseModel):
     messages: List[Message]

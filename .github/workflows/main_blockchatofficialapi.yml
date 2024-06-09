@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - blockchatapi
+name: Build and deploy container app to Azure Web App - blockchatofficialapi
 
 on:
   push:
@@ -22,15 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://blockchatapi.azurecr.io/
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
+        registry: https://blockchatofficial.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_2c95458c4ee14b5c942dd5e7d8d2b470 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_da6d0ae4a81941ea927f0a33170f9a6b }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: blockchatapi.azurecr.io/${{ secrets.ACR_USERNAME }}/custom-openai-api-endpoint:${{ github.sha }}
+        tags: blockchatofficial.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2c95458c4ee14b5c942dd5e7d8d2b470 }}/blockchatapi:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -45,7 +45,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'blockchatapi'
+        app-name: 'blockchatofficialapi'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_3aa18375cf534c4b84f66e1492357db8 }}
-        images: 'blockchatapi.azurecr.io/${{ secrets.ACR_USERNAME }}/custom-openai-api-endpoint:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2b5ad7ac78f44b6fbdb5454a2bd22709 }}
+        images: 'blockchatofficial.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2c95458c4ee14b5c942dd5e7d8d2b470 }}/blockchatapi:${{ github.sha }}'
