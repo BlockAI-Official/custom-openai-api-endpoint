@@ -2,6 +2,7 @@ import time
 import os
 import wandb
 import uuid
+import subprocess
 
 from typing import Optional, List
 from fastapi import FastAPI
@@ -10,6 +11,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 
 from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain_core.tools import tool
 from langchain_community.tools import AIPluginTool
 from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
 from langchain_community.tools.tavily_search.tool import TavilySearchResults
@@ -69,13 +71,24 @@ solanalabs_tool = AIPluginTool.from_plugin_url(URL + "/.well-known/ai-plugin.jso
 search = TavilySearchAPIWrapper()
 tavily_tool = TavilySearchResults(api_wrapper=search)
 
+## Rugpull Checker
+
+@tool
+def calculate_rug_pull_score(public_key: str) -> str:
+    """Calculate the rug pull score for a given public key by calling the Node.js script. Make sure the input for this tool is only the public key and nothing else. No need to specify public_key = <wallet address>. <wallet address> is ok for the input"""
+    try:
+        result = subprocess.run(['node', 'checkRugPulls.js', public_key], capture_output=True, text=True, check=True)
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        return f"Error: {e.stderr.strip()}"
+
 ### Memory
 
 ## Long term memory
 
 embed_model = FastEmbedEmbeddings(model_name="BAAI/bge-base-en-v1.5")
 
-urls = [
+kamino_urls = [
     "https://docs.kamino.finance/",
     "https://docs.kamino.finance/kamino-lend-litepaper",
     "https://docs.kamino.finance/products/overview",
@@ -102,6 +115,41 @@ urls = [
     "https://docs.kamino.finance/kamino-points/overview/seasons/season-1",
     "https://docs.kamino.finance/kamino-points/overview/seasons/season-2"
 ]
+
+marginfi_urls = [
+    "https://docs.marginfi.com/",
+    "https://docs.marginfi.com/marginfi-protocol",
+    "https://docs.marginfi.com/concepts/the-basics",
+    "https://docs.marginfi.com/concepts/the-basics/lending-+-borrowing",
+    "https://docs.marginfi.com/concepts/the-basics/fees-+-yield",
+    "https://docs.marginfi.com/concepts/the-basics/account-health",
+    "https://docs.marginfi.com/concepts/mechanism-design",
+    "https://docs.marginfi.com/concepts/mechanism-design/oracle-usage",
+    "https://docs.marginfi.com/concepts/mechanism-design/interest-rate-mechanism",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management/risk-tiers",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management/risk-engine",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management/risk-engine/liquidator-execution-capacity",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management/risk-engine/market-depth",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management/risk-engine/market-depth-recovery-time",
+    "https://docs.marginfi.com/concepts/mechanism-design/risk-management/risk-engine/configuring-protocol-constraints",
+    "https://docs.marginfi.com/concepts/listing-criteria",
+    "https://docs.marginfi.com/user-guides/liquid-staking-token-lst-user-guide",
+    "https://docs.marginfi.com/user-guides/mrgnlend-user-guide",
+    "https://docs.marginfi.com/user-guides/marginfi-mobile-app-user-guide",
+    "https://docs.marginfi.com/contracts/marginfi-v2-mrgnlend",
+    "https://docs.marginfi.com/contracts/liquidity-incentive-program-lip",
+    "https://docs.marginfi.com/contracts/usdybx",
+    "https://docs.marginfi.com/security/audits",
+    "https://docs.marginfi.com/security/fuzz-tests",
+    "https://docs.marginfi.com/sdks/typescript",
+    "https://docs.marginfi.com/sdks/rust",
+    "https://docs.marginfi.com/analytics/realtime-24h-analytics",
+    "https://docs.marginfi.com/contributing/developers",
+    "https://docs.marginfi.com/contributing/technical-writers"
+]
+
+urls = kamino_urls + marginfi_urls
 
 docs = [WebBaseLoader(url).load() for url in urls]
 docs_list = [item for sublist in docs for item in sublist]
@@ -153,7 +201,7 @@ prompt = hub.pull("react-prompt")
 
 ## All tools together
 
-tools += [solanalabs_tool, tavily_tool, retriever_tool]
+tools += [solanalabs_tool, tavily_tool, retriever_tool, calculate_rug_pull_score]
 
 ## Defining an agent with tools and memory
 
