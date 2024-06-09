@@ -318,6 +318,10 @@ async def chat_completions(request: ChatCompletionRequest):
 async def get_chat_completions(request: ChatCompletionRequest):
     return await chat_completions(request)
 
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))  # Default to 8000 if not specified
