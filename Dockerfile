@@ -23,7 +23,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | python3 - \
+    && poetry --version
 
 # Ensure that Poetry installs to system
 ENV PATH="/root/.local/bin:$PATH"
@@ -38,9 +39,9 @@ COPY . /app
 RUN npm init -y \
     && npm install @solana/web3.js
 
-# Install dependencies
+# Install dependencies using Poetry
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+    && poetry install --no-interaction --no-ansi || cat /root/.cache/pypoetry/virtualenvs/*/log/*
 
 # Install python-dotenv
 RUN pip install python-dotenv
