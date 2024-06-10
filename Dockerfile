@@ -13,6 +13,8 @@ RUN apt-get update \
         curl \
         build-essential \
         python3-dev \
+        libffi-dev \
+        libssl-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -40,7 +42,7 @@ RUN npm init -y \
 
 # Install dependencies
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+    && poetry install --no-interaction --no-ansi --verbose
 
 # Install python-dotenv
 RUN pip install python-dotenv
