@@ -166,7 +166,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k":2})
 retriever_tool = create_retriever_tool(
     retriever,
     "documentation_search",
-    "Search for information about Kamino Finance. For any questions about Kamino Finance, you must use this tool!",
+    "Search for information about Kamino Finance MarginFi. For any questions about Kamino Finance and MarginFi whitepapers, you must use this tool!",
 )
 
 ## Short term memory
