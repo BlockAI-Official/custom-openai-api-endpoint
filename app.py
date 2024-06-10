@@ -171,7 +171,8 @@ retriever_tool = create_retriever_tool(
 
 ## Short term memory
 
-llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
+# llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 summarization_prompt = hub.pull("summarization-prompt")
 
 def get_session_history(session_id):
@@ -196,7 +197,7 @@ def summarize_messages(chain_input):
 ## Sensory memory
 
 # prompt = hub.pull("openai-functions-agent")
-prompt = hub.pull("react-prompt")
+prompt = hub.pull("react-agent-4o")
 
 ### Agent
 
